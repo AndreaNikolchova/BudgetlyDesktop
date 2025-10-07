@@ -1,12 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BudgetlyDesktop.Data.Models
+﻿namespace BudgetlyDesktop.Data.Models
 {
-    internal class Transaction
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    public class Transaction
     {
+        [Key]
+        public int Id { get; set; }
+        [Required]
+        public string Title { get; set; } = null!;
+        [Required]
+        public decimal Amount {  get; set; }
+        [Required]
+        public DateTime Date { get; set; }
+        [Required]
+        public string Type { get; set; } = null!;
+
+        [ForeignKey(nameof(CategoryId))]
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }
