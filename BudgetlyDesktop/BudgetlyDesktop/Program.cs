@@ -1,17 +1,22 @@
+using BudgetlyDesktop.Data;
+using BudgetlyDesktop.Services.Transaction;
+using BudgetlyDesktop.Services.Transaction.Contracts;
+
 namespace BudgetlyDesktop
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
+
+         
+            var dbContext = new BudgetlyContext();
+            ITransactionService transactionService = new TransactionService(dbContext);
+
+           
+            Application.Run(new MainForm(transactionService));
         }
     }
 }

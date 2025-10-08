@@ -10,9 +10,10 @@
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
-            optionsBuilder.UseSqlite("Data Source=BudgetlyDesktop.db");
+            var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BudgetlyDesktop.db");
+            optionsBuilder.UseSqlite($"Data Source={dbPath}");
         }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

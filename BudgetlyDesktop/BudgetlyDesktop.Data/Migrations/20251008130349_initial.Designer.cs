@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BudgetlyDesktop.Data.Migrations
 {
     [DbContext(typeof(BudgetlyContext))]
-    [Migration("20251008065906_seed")]
-    partial class seed
+    [Migration("20251008130349_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
