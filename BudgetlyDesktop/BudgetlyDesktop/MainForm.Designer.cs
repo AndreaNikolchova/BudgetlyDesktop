@@ -105,6 +105,7 @@ namespace BudgetlyDesktop
             btnTransactions.TabIndex = 1;
             btnTransactions.Text = "Transactions";
             btnTransactions.UseVisualStyleBackColor = false;
+            btnTransactions.Click += btnTransactions_Click;
             // 
             // pbLogo
             // 

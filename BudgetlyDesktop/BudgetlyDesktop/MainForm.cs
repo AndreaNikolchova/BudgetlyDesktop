@@ -51,6 +51,10 @@ namespace BudgetlyDesktop
         {
             DashboardBuilder.LoadDashboard(panelContent,lblTitle,transactionService);
         }
-       
+        private void btnTransactions_Click(object sender, EventArgs e)
+        {
+            TransactionsBuilder.ShowTransactionsPage(panelContent, lblTitle);
+        }
+
     }
 }
