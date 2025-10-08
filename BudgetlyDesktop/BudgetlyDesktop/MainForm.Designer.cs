@@ -1,4 +1,5 @@
-﻿namespace BudgetlyDesktop
+﻿
+namespace BudgetlyDesktop
 {
     partial class MainForm
     {
@@ -34,7 +35,10 @@
             btnTransactions = new Button();
             pbLogo = new PictureBox();
             panelTopBar = new Panel();
-            label1 = new Label();
+            btnMin = new Button();
+            btnExit = new Button();
+            lblTitle = new Label();
+            panelContent = new Panel();
             panelSideBar.SuspendLayout();
             panelSideButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbLogo).BeginInit();
@@ -48,7 +52,7 @@
             panelSideBar.Controls.Add(pbLogo);
             panelSideBar.Dock = DockStyle.Left;
             panelSideBar.Location = new Point(0, 0);
-            panelSideBar.MaximumSize = new Size(220, 0);
+            panelSideBar.MaximumSize = new Size(222, 0);
             panelSideBar.Name = "panelSideBar";
             panelSideBar.Size = new Size(220, 650);
             panelSideBar.TabIndex = 0;
@@ -61,7 +65,7 @@
             panelSideButtons.FlowDirection = FlowDirection.TopDown;
             panelSideButtons.Location = new Point(0, 110);
             panelSideButtons.Name = "panelSideButtons";
-            panelSideButtons.Size = new Size(220, 195);
+            panelSideButtons.Size = new Size(220, 212);
             panelSideButtons.TabIndex = 1;
             panelSideButtons.WrapContents = false;
             // 
@@ -114,7 +118,9 @@
             // 
             // panelTopBar
             // 
-            panelTopBar.Controls.Add(label1);
+            panelTopBar.Controls.Add(btnMin);
+            panelTopBar.Controls.Add(btnExit);
+            panelTopBar.Controls.Add(lblTitle);
             panelTopBar.Dock = DockStyle.Top;
             panelTopBar.Location = new Point(220, 0);
             panelTopBar.MaximumSize = new Size(0, 60);
@@ -122,20 +128,56 @@
             panelTopBar.Size = new Size(880, 60);
             panelTopBar.TabIndex = 1;
             // 
-            // label1
+            // btnMin
             // 
-            label1.AutoSize = true;
-            label1.BackColor = Color.Transparent;
-            label1.Dock = DockStyle.Left;
-            label1.FlatStyle = FlatStyle.Flat;
-            label1.Font = new Font("Bahnschrift SemiCondensed", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.FromArgb(238, 238, 238);
-            label1.Location = new Point(0, 0);
-            label1.Name = "label1";
-            label1.Padding = new Padding(5, 15, 0, 0);
-            label1.Size = new Size(166, 56);
-            label1.TabIndex = 0;
-            label1.Text = "Dashboard";
+            btnMin.BackColor = Color.FromArgb(57, 62, 70);
+            btnMin.FlatAppearance.BorderSize = 0;
+            btnMin.FlatStyle = FlatStyle.Flat;
+            btnMin.ForeColor = Color.FromArgb(238, 238, 238);
+            btnMin.Location = new Point(806, 0);
+            btnMin.Name = "btnMin";
+            btnMin.Size = new Size(37, 29);
+            btnMin.TabIndex = 1;
+            btnMin.Text = "__";
+            btnMin.UseVisualStyleBackColor = false;
+            btnMin.Click += btnMin_Click;
+            // 
+            // btnExit
+            // 
+            btnExit.BackColor = Color.FromArgb(57, 62, 70);
+            btnExit.FlatAppearance.BorderSize = 0;
+            btnExit.FlatStyle = FlatStyle.Flat;
+            btnExit.ForeColor = Color.FromArgb(238, 238, 238);
+            btnExit.Location = new Point(843, 0);
+            btnExit.Name = "btnExit";
+            btnExit.Size = new Size(37, 29);
+            btnExit.TabIndex = 0;
+            btnExit.Text = "X";
+            btnExit.UseVisualStyleBackColor = false;
+            btnExit.Click += btnExit_Click;
+            // 
+            // lblTitle
+            // 
+            lblTitle.AutoSize = true;
+            lblTitle.BackColor = Color.Transparent;
+            lblTitle.Dock = DockStyle.Left;
+            lblTitle.FlatStyle = FlatStyle.Flat;
+            lblTitle.Font = new Font("Bahnschrift SemiCondensed", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblTitle.ForeColor = Color.FromArgb(238, 238, 238);
+            lblTitle.Location = new Point(0, 0);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Padding = new Padding(5, 15, 0, 0);
+            lblTitle.Size = new Size(90, 56);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Tittle";
+            // 
+            // panelContent
+            // 
+            panelContent.Dock = DockStyle.Fill;
+            panelContent.Location = new Point(220, 60);
+            panelContent.Name = "panelContent";
+            panelContent.Size = new Size(880, 590);
+            panelContent.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -143,6 +185,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(34, 40, 49);
             ClientSize = new Size(1100, 650);
+            Controls.Add(panelContent);
             Controls.Add(panelTopBar);
             Controls.Add(panelSideBar);
             FormBorderStyle = FormBorderStyle.None;
@@ -159,6 +202,8 @@
             ResumeLayout(false);
         }
 
+
+
         #endregion
 
         private Panel panelSideBar;
@@ -167,6 +212,9 @@
         private FlowLayoutPanel panelSideButtons;
         private Button btnDashboard;
         private Button btnTransactions;
-        private Label label1;
+        private Label lblTitle;
+        private Panel panelContent;
+        private Button btnExit;
+        private Button btnMin;
     }
 }
