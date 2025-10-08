@@ -14,7 +14,6 @@
             optionsBuilder.UseSqlite($"Data Source={dbPath}");
         }
         
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
