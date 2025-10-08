@@ -28,5 +28,29 @@
                 .ToListAsync();
             return transactions;
         }
+
+        public async Task<decimal> GetBalanceAsync()
+        {
+            var incomeTransactions = await GetByTypeAsync("income");
+            var expenseTransactions = await GetByTypeAsync("expense");
+
+            decimal income = incomeTransactions.Sum(t => t.Amount);
+            decimal expense = expenseTransactions.Sum(t => t.Amount);
+
+            return income - expense;
+        }
+
+        public async Task<decimal> GetIncomeAsync()
+        {
+            var incomeTransactions = await GetByTypeAsync("income");
+            return incomeTransactions.Sum(t => t.Amount);
+        }
+
+        public async  Task<decimal> GetExpenseAsync()
+        {
+            var expenseTransactions = await GetByTypeAsync("expense");
+            return expenseTransactions.Sum(t => t.Amount);
+
+        }
     }
 }
