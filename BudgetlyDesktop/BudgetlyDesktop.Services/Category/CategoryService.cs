@@ -14,7 +14,7 @@
         {
             this.dbContext = dbContext;
         }
-        public async Task<IEnumerable<CategoryViewModel>> GetAllASync()
+        public async Task<IEnumerable<CategoryViewModel>> GetAllAsync()
         {
             List<CategoryViewModel> categories = await this.dbContext.Categories.Select(c=>new CategoryViewModel
             {

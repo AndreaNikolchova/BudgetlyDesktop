@@ -3,6 +3,6 @@
     using BugetlyDesktop.ViewModels.Category;
     public interface ICategoryService
     {
-        Task<IEnumerable<CategoryViewModel>> GetAllASync();
+        Task<IEnumerable<CategoryViewModel>> GetAllAsync();
     }
 }
