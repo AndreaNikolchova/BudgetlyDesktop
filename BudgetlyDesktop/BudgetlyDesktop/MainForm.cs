@@ -1,11 +1,14 @@
 
 namespace BudgetlyDesktop
 {
+    using BudgetlyDesktop.Services.Transaction.Contracts;
     using BudgetlyDesktop.UI.Builders;
     public partial class MainForm : Form
     {
-        public MainForm()
+        public ITransactionService transactionService { get; set; }
+        public MainForm(ITransactionService transactionService)
         {
+            this.transactionService = transactionService;
             InitializeComponent();
 
             panelSideBar.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
@@ -46,7 +49,7 @@ namespace BudgetlyDesktop
         }
         private void btnDashboard_Click(object sender, EventArgs e)
         {
-            DashboardBuilder.LoadDashboard(panelContent,lblTitle);
+            DashboardBuilder.LoadDashboard(panelContent,lblTitle,transactionService);
         }
        
     }
