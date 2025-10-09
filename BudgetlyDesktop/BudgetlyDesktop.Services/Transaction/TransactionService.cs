@@ -18,10 +18,10 @@
         public async Task<IEnumerable<TransactionTypeViewModel>> GetByTypeAsync(string type)
         {
             List<TransactionTypeViewModel> transactions = await dbContext.Transactions
-                .Where(t => t.Type.ToLower() == type.ToLower())
+                .Where(t => t.Type.Name.ToLower() == type.ToLower())
                 .Select(t => new TransactionTypeViewModel
                 {
-                    Type = t.Type,
+                    Type = t.Type.Name,
                     Amount = t.Amount
                 })
                 .AsNoTracking()
@@ -51,6 +51,21 @@
             var expenseTransactions = await GetByTypeAsync("expense");
             return expenseTransactions.Sum(t => t.Amount);
 
+        }
+
+        public async Task<IEnumerable<TransactionViewModel>> GetAllTransactionsAsync()
+        {
+            List<TransactionViewModel> transactions = await this.dbContext.Transactions.Select(t => new TransactionViewModel
+            {
+                Title = t.Title,
+                Amount = t.Amount,
+                Date = t.Date,
+                Category = t.Category.Name,
+                Type = t.Type.Name
+            })
+            .AsNoTracking()
+            .ToListAsync();
+            return transactions;
         }
     }
 }

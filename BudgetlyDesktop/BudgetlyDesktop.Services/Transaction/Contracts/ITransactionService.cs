@@ -3,6 +3,7 @@
     using BugetlyDesktop.ViewModels.Transaction;
     public interface ITransactionService
     {
+        Task<IEnumerable<TransactionViewModel>> GetAllTransactionsAsync();
         Task<IEnumerable<TransactionTypeViewModel>> GetByTypeAsync(string type);
         Task<decimal> GetBalanceAsync();
         Task<decimal> GetIncomeAsync();
