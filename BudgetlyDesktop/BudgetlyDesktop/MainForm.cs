@@ -1,14 +1,21 @@
 
 namespace BudgetlyDesktop
 {
+    using BudgetlyDesktop.Services.Category.Contracts;
     using BudgetlyDesktop.Services.Transaction.Contracts;
+    using BudgetlyDesktop.Services.Type.Contracts;
     using BudgetlyDesktop.UI.Builders;
     public partial class MainForm : Form
     {
         public ITransactionService transactionService { get; set; }
-        public MainForm(ITransactionService transactionService)
+        public ICategoryService categoryService { get; set; }
+        public ITypeService typeService { get; set; }
+        public MainForm(ITransactionService transactionService,ICategoryService categoryService,ITypeService typeService)
         {
             this.transactionService = transactionService;
+            this.categoryService = categoryService;
+            this.typeService = typeService;
+
             InitializeComponent();
 
             panelSideBar.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
@@ -16,7 +23,12 @@ namespace BudgetlyDesktop
 
             panelSideBar.Paint += PanelSidebar_Paint;
             panelSideBar.Resize += (s, e) => panelSideBar.Invalidate();
+            ButtonHover();
 
+
+        }
+        private void ButtonHover()
+        {
             btnDashboard.MouseEnter += (s, e) => { btnDashboard.BackColor = Color.FromArgb(57, 62, 70); };
             btnDashboard.MouseLeave += (s, e) => { btnDashboard.BackColor = Color.Transparent; };
             btnTransactions.MouseEnter += (s, e) => { btnTransactions.BackColor = Color.FromArgb(57, 62, 70); };
@@ -53,7 +65,7 @@ namespace BudgetlyDesktop
         }
         private void btnTransactions_Click(object sender, EventArgs e)
         {
-            TransactionsBuilder.ShowTransactionsPage(panelContent, lblTitle);
+            TransactionsBuilder.ShowTransactionsPage(panelContent, lblTitle,typeService,categoryService,transactionService);
         }
 
     }
