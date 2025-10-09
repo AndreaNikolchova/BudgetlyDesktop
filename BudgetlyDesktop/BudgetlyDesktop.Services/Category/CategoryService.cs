@@ -1,6 +1,6 @@
 ﻿namespace BudgetlyDesktop.Services.Category
 {
-    using BugetlyDesktop.ViewModels.Category;
+   
     using Contracts;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -14,14 +14,10 @@
         {
             this.dbContext = dbContext;
         }
-        public async Task<IEnumerable<CategoryViewModel>> GetAllAsync()
+        public async Task<IEnumerable<string>> GetAllAsync()
         {
-            List<CategoryViewModel> categories = await this.dbContext.Categories.Select(c=>new CategoryViewModel
-            {
-                Name = c.Name,
-                Type = c.Type,
-            }
-            ).AsNoTracking()
+            List<string> categories = await this.dbContext.Categories.Select(c=>c.Name)
+            .AsNoTracking()
             .ToListAsync();
 
             return categories;
