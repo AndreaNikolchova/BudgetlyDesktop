@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BudgetlyDesktop.Data.Migrations
 {
     [DbContext(typeof(BudgetlyContext))]
-    [Migration("20251008130349_initial")]
+    [Migration("20251009060323_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -30,10 +30,6 @@ namespace BudgetlyDesktop.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
@@ -42,38 +38,32 @@ namespace BudgetlyDesktop.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Food",
-                            Type = "Expense"
+                            Name = "Food"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Transport",
-                            Type = "Expense"
+                            Name = "Transport"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Entertainment",
-                            Type = "Expense"
+                            Name = "Entertainment"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Salary",
-                            Type = "Income"
+                            Name = "Salary"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Investments",
-                            Type = "Income"
+                            Name = "Investments"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "Bills",
-                            Type = "Expense"
+                            Name = "Bills"
                         });
                 });
 
@@ -96,15 +86,43 @@ namespace BudgetlyDesktop.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("TypeId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("TypeId");
+
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("BudgetlyDesktop.Data.Models.Type", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Types");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Income"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Expense"
+                        });
                 });
 
             modelBuilder.Entity("BudgetlyDesktop.Data.Models.Transaction", b =>
@@ -115,10 +133,23 @@ namespace BudgetlyDesktop.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BudgetlyDesktop.Data.Models.Type", "Type")
+                        .WithMany("Transactions")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("BudgetlyDesktop.Data.Models.Category", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("BudgetlyDesktop.Data.Models.Type", b =>
                 {
                     b.Navigation("Transactions");
                 });

@@ -15,7 +15,9 @@
         [Required]
         public DateTime Date { get; set; }
         [Required]
-        public string Type { get; set; } = null!;
+        [ForeignKey(nameof(TypeId))]
+        public int TypeId { get; set; }
+        public Type Type { get; set; }
 
         [ForeignKey(nameof(CategoryId))]
         public int CategoryId { get; set; }
