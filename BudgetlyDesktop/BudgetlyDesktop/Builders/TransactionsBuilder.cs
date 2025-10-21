@@ -65,9 +65,19 @@
 
             DateTimePicker dtpFrom = new DateTimePicker { Format = DateTimePickerFormat.Short };
             DateTimePicker dtpTo = new DateTimePicker { Format = DateTimePickerFormat.Short, Value = DateTime.Today };
-            Button btnApplyFilter = new Button { Text = "Apply" };
-            Button btnAdd = new Button { Text = "Add" };
-
+         
+            Button btnApplyFilter = new Button
+            {
+                Text = "Apply",
+                Font = new Font("Bahnschrift SemiCondensed", 10, FontStyle.Bold),
+                BackColor = Color.FromArgb(0, 173, 181),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Width = 200,
+                Height = 30,
+                Anchor = AnchorStyles.Left,
+                
+            };
             ComboBox cmbCategory = await CreateCategoryComboBox(categoryService);
             ComboBox cmbType = await CreateTypeComboBox(typeService);
 
@@ -77,13 +87,8 @@
                 await LoadTransactions(transactionService, panelContent);
             };
 
-
-            btnAdd.Click += (s, e) =>
-            {
-                MessageBox.Show("Add transaction clicked!");
-            };
-
-            panelFilters.Controls.Add(CreateFlowFilter(dtpFrom, dtpTo, cmbCategory, cmbType, btnApplyFilter, btnAdd));
+        
+            panelFilters.Controls.Add(CreateFlowFilter(dtpFrom, dtpTo, cmbCategory, cmbType, btnApplyFilter));
             return panelFilters;
         }
 
@@ -122,8 +127,7 @@
             DateTimePicker dtpTo,
             ComboBox categoryComboBox,
             ComboBox typeComboBox,
-            Button btnApplyFilter,
-            Button btnAdd)
+            Button btnApplyFilter)
         {
             FlowLayoutPanel flowFilters = new FlowLayoutPanel
             {
@@ -140,8 +144,7 @@
                 categoryComboBox,
                 typeComboBox,
                 btnApplyFilter,
-                btnAdd
-            });
+                 });
 
             return flowFilters;
         }
