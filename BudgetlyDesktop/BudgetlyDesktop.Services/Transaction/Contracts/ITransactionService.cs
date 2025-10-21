@@ -8,6 +8,7 @@
         Task<decimal> GetBalanceAsync();
         Task<decimal> GetIncomeAsync();
         Task<decimal> GetExpenseAsync();
+        Task<bool> AddTransactionAsync(AddTransactionViewModel transactionViewModel);
 
     }
 }

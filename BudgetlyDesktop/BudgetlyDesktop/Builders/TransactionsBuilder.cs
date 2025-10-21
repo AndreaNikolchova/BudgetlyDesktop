@@ -1,20 +1,13 @@
-﻿using BudgetlyDesktop.Services.Category.Contracts;
-using BudgetlyDesktop.Services.Transaction.Contracts;
-using BudgetlyDesktop.Services.Type.Contracts;
-using BugetlyDesktop.ViewModels.Transaction;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace BudgetlyDesktop.UI.Builders
+﻿namespace BudgetlyDesktop.UI.Builders
 {
+    using BudgetlyDesktop.Services.Category.Contracts;
+    using BudgetlyDesktop.Services.Transaction.Contracts;
+    using BudgetlyDesktop.Services.Type.Contracts;
+    using BugetlyDesktop.ViewModels.Transaction;
+    using System.ComponentModel;
     public static class TransactionsBuilder
     {
-        private static BindingList<TransactionViewModel> _bindingList; 
+        private static BindingList<TransactionViewModel> _bindingList;
 
         public static async void ShowTransactionsPage(
             Panel panelContent,
@@ -26,15 +19,15 @@ namespace BudgetlyDesktop.UI.Builders
             panelContent.Controls.Clear();
             lblTitle.Text = "Transactions";
 
-            
+
             Panel panelFilters = await CreateFilterPanel(categoryService, typeService, transactionService, panelContent);
             panelContent.Controls.Add(panelFilters);
 
-            
+
             Panel tablePanel = CreateTableOfTransactions();
             panelContent.Controls.Add(tablePanel);
 
-            
+
             await LoadTransactions(transactionService, panelContent);
         }
 
@@ -44,7 +37,7 @@ namespace BudgetlyDesktop.UI.Builders
 
             _bindingList = new BindingList<TransactionViewModel>(transactions);
 
-            
+
             var dgv = panelContent.Controls
                 .OfType<Panel>()
                 .SelectMany(p => p.Controls.OfType<DataGridView>())
@@ -52,7 +45,7 @@ namespace BudgetlyDesktop.UI.Builders
 
             if (dgv != null)
             {
-                dgv.DataSource = null; 
+                dgv.DataSource = null;
                 dgv.DataSource = _bindingList;
             }
         }
@@ -78,13 +71,13 @@ namespace BudgetlyDesktop.UI.Builders
             ComboBox cmbCategory = await CreateCategoryComboBox(categoryService);
             ComboBox cmbType = await CreateTypeComboBox(typeService);
 
-           
+
             btnApplyFilter.Click += async (s, e) =>
             {
-                await LoadTransactions(transactionService, panelContent); 
+                await LoadTransactions(transactionService, panelContent);
             };
 
-           
+
             btnAdd.Click += (s, e) =>
             {
                 MessageBox.Show("Add transaction clicked!");

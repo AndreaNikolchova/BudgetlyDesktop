@@ -10,7 +10,7 @@ namespace BudgetlyDesktop
         public ITransactionService transactionService { get; set; }
         public ICategoryService categoryService { get; set; }
         public ITypeService typeService { get; set; }
-        public MainForm(ITransactionService transactionService,ICategoryService categoryService,ITypeService typeService)
+        public MainForm(ITransactionService transactionService, ICategoryService categoryService, ITypeService typeService)
         {
             this.transactionService = transactionService;
             this.categoryService = categoryService;
@@ -33,6 +33,8 @@ namespace BudgetlyDesktop
             btnDashboard.MouseLeave += (s, e) => { btnDashboard.BackColor = Color.Transparent; };
             btnTransactions.MouseEnter += (s, e) => { btnTransactions.BackColor = Color.FromArgb(57, 62, 70); };
             btnTransactions.MouseLeave += (s, e) => { btnTransactions.BackColor = Color.Transparent; };
+            btnAdd.MouseEnter += (s, e) => { btnAdd.BackColor = Color.FromArgb(57, 62, 70); };
+            btnAdd.MouseLeave += (s, e) => { btnAdd.BackColor = Color.Transparent; };
         }
         private void PanelSidebar_Paint(object sender, PaintEventArgs e)
         {
@@ -41,8 +43,8 @@ namespace BudgetlyDesktop
 
             using (Pen pen = new Pen(Color.FromArgb(0, 173, 181), 1))
             {
-               
-                int x = panelSideBar.ClientSize.Width - 1; 
+
+                int x = panelSideBar.ClientSize.Width - 1;
                 e.Graphics.DrawLine(pen, x, 0, x, panelSideBar.ClientSize.Height);
             }
         }
@@ -50,10 +52,10 @@ namespace BudgetlyDesktop
         {
             WelcomeBuilder.ShowWelcomeScreen(panelContent, lblTitle);
         }
-        
+
         private void btnExit_Click(object sender, EventArgs e)
         {
-           Application.Exit();
+            Application.Exit();
         }
         private void btnMin_Click(object sender, EventArgs e)
         {
@@ -61,12 +63,16 @@ namespace BudgetlyDesktop
         }
         private void btnDashboard_Click(object sender, EventArgs e)
         {
-            DashboardBuilder.LoadDashboard(panelContent,lblTitle,transactionService);
+            DashboardBuilder.LoadDashboard(panelContent, lblTitle, transactionService);
         }
         private void btnTransactions_Click(object sender, EventArgs e)
         {
-            TransactionsBuilder.ShowTransactionsPage(panelContent, lblTitle,typeService,categoryService,transactionService);
+            TransactionsBuilder.ShowTransactionsPage(panelContent, lblTitle, typeService, categoryService, transactionService);
         }
 
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            AddTransactionBuilder.ShowAddTransactionPage(panelContent, lblTitle,categoryService,typeService, transactionService);
+        }
     }
 }

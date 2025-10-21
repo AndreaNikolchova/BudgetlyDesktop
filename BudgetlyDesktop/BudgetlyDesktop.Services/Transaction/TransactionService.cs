@@ -1,6 +1,7 @@
 ﻿namespace BudgetlyDesktop.Services.Transaction
 {
     using BudgetlyDesktop.Data;
+    using BudgetlyDesktop.Data.Models;
     using BudgetlyDesktop.Services.Transaction.Contracts;
     using BugetlyDesktop.ViewModels.Transaction;
     using Microsoft.EntityFrameworkCore;
@@ -66,6 +67,22 @@
             .AsNoTracking()
             .ToListAsync();
             return transactions;
+        }
+
+        public async Task<bool> AddTransactionAsync(AddTransactionViewModel model)
+        {
+            var transaction = new Transaction
+            {
+                Title = model.Title,
+                Amount = model.Amount,
+                Date = model.Date,
+                CategoryId = model.CategoryId +1,
+                TypeId = model.TypeId+1
+            };
+
+            await dbContext.Transactions.AddAsync(transaction);
+            await dbContext.SaveChangesAsync();
+            return true;
         }
     }
 }

@@ -33,6 +33,7 @@ namespace BudgetlyDesktop
             panelSideButtons = new FlowLayoutPanel();
             btnDashboard = new Button();
             btnTransactions = new Button();
+            btnAdd = new Button();
             pbLogo = new PictureBox();
             panelTopBar = new Panel();
             btnMin = new Button();
@@ -61,6 +62,7 @@ namespace BudgetlyDesktop
             // 
             panelSideButtons.Controls.Add(btnDashboard);
             panelSideButtons.Controls.Add(btnTransactions);
+            panelSideButtons.Controls.Add(btnAdd);
             panelSideButtons.Dock = DockStyle.Top;
             panelSideButtons.FlowDirection = FlowDirection.TopDown;
             panelSideButtons.Location = new Point(0, 110);
@@ -106,6 +108,25 @@ namespace BudgetlyDesktop
             btnTransactions.Text = "Transactions";
             btnTransactions.UseVisualStyleBackColor = false;
             btnTransactions.Click += btnTransactions_Click;
+            // 
+            // btnAdd
+            // 
+            btnAdd.Cursor = Cursors.Hand;
+            btnAdd.Dock = DockStyle.Left;
+            btnAdd.FlatAppearance.BorderSize = 0;
+            btnAdd.FlatStyle = FlatStyle.Flat;
+            btnAdd.Font = new Font("Bahnschrift SemiCondensed", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnAdd.ForeColor = Color.FromArgb(238, 238, 238);
+            btnAdd.Location = new Point(0, 80);
+            btnAdd.Margin = new Padding(0);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Padding = new Padding(10, 0, 0, 0);
+            btnAdd.RightToLeft = RightToLeft.No;
+            btnAdd.Size = new Size(219, 40);
+            btnAdd.TabIndex = 2;
+            btnAdd.Text = "Add transaction";
+            btnAdd.UseVisualStyleBackColor = false;
+            btnAdd.Click += btnAdd_Click;
             // 
             // pbLogo
             // 
@@ -218,5 +239,6 @@ namespace BudgetlyDesktop
         private Panel panelContent;
         private Button btnExit;
         private Button btnMin;
+        private Button btnAdd;
     }
 }
