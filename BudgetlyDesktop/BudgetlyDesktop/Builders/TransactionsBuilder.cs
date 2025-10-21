@@ -65,7 +65,7 @@
 
             DateTimePicker dtpFrom = new DateTimePicker { Format = DateTimePickerFormat.Short };
             DateTimePicker dtpTo = new DateTimePicker { Format = DateTimePickerFormat.Short, Value = DateTime.Today };
-         
+
             Button btnApplyFilter = new Button
             {
                 Text = "Apply",
@@ -76,7 +76,7 @@
                 Width = 200,
                 Height = 30,
                 Anchor = AnchorStyles.Left,
-                
+
             };
             ComboBox cmbCategory = await CreateCategoryComboBox(categoryService);
             ComboBox cmbType = await CreateTypeComboBox(typeService);
@@ -84,12 +84,32 @@
 
             btnApplyFilter.Click += async (s, e) =>
             {
-                await LoadTransactions(transactionService, panelContent);
+                await FilterTransactions(dtpFrom, dtpTo, cmbCategory, cmbType, transactionService, panelContent);
             };
 
-        
+
             panelFilters.Controls.Add(CreateFlowFilter(dtpFrom, dtpTo, cmbCategory, cmbType, btnApplyFilter));
             return panelFilters;
+        }
+
+        private static async Task FilterTransactions(DateTimePicker dtpFrom, DateTimePicker dtpTo, ComboBox categoryComboBox, ComboBox typeComboBox, ITransactionService transactionService, Panel panelContent)
+        {
+            var transactions = await transactionService.GetFilteredTransactionsAsync(
+         dtpFrom.Value,
+         dtpTo.Value,
+         categoryComboBox.SelectedItem?.ToString(),
+         typeComboBox.SelectedItem?.ToString()
+     );
+            var dgv = panelContent.Controls
+               .OfType<Panel>()
+               .SelectMany(p => p.Controls.OfType<DataGridView>())
+               .FirstOrDefault();
+
+            if (dgv != null)
+            {
+                dgv.DataSource = null;
+                dgv.DataSource = transactions;
+            }
         }
 
         private static async Task<ComboBox> CreateCategoryComboBox(ICategoryService categoryService)
@@ -100,6 +120,7 @@
             var list = categories?.ToList() ?? new List<string>();
             if (list.Any())
             {
+                cmbCategory.Items.Add("All");
                 cmbCategory.Items.AddRange(list.ToArray());
                 cmbCategory.SelectedIndex = 0;
             }
@@ -115,6 +136,7 @@
             var list = types?.ToList() ?? new List<string>();
             if (list.Any())
             {
+                cmbType.Items.Add("All");
                 cmbType.Items.AddRange(list.ToArray());
                 cmbType.SelectedIndex = 0;
             }

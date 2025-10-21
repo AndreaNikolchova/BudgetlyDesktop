@@ -5,6 +5,7 @@
     using BudgetlyDesktop.Services.Transaction.Contracts;
     using BugetlyDesktop.ViewModels.Transaction;
     using Microsoft.EntityFrameworkCore;
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -47,7 +48,7 @@
             return incomeTransactions.Sum(t => t.Amount);
         }
 
-        public async  Task<decimal> GetExpenseAsync()
+        public async Task<decimal> GetExpenseAsync()
         {
             var expenseTransactions = await GetByTypeAsync("expense");
             return expenseTransactions.Sum(t => t.Amount);
@@ -76,13 +77,49 @@
                 Title = model.Title,
                 Amount = model.Amount,
                 Date = model.Date,
-                CategoryId = model.CategoryId +1,
-                TypeId = model.TypeId+1
+                CategoryId = model.CategoryId + 1,
+                TypeId = model.TypeId + 1
             };
 
             await dbContext.Transactions.AddAsync(transaction);
             await dbContext.SaveChangesAsync();
             return true;
         }
+
+        public async Task<IEnumerable<TransactionViewModel>> GetFilteredTransactionsAsync( DateTime from,DateTime to,string category,string type)
+        {
+
+            var query = dbContext.Transactions
+                .Where(t => t.Date.Date >= from.Date && t.Date.Date <= to.Date)
+                .AsQueryable();
+
+
+            if (!string.IsNullOrWhiteSpace(category) && category.ToLower() != "all")
+            {
+                query = query.Where(t => t.Category.Name.ToLower() == category.ToLower());
+            }
+
+
+            if (!string.IsNullOrWhiteSpace(type) && type.ToLower() != "all")
+            {
+                query = query.Where(t => t.Type.Name.ToLower() == type.ToLower());
+            }
+
+
+            var transactions = await query
+                .Select(t => new TransactionViewModel
+                {
+                    Title = t.Title,
+                    Amount = t.Amount,
+                    Date = t.Date,
+                    Category = t.Category.Name,
+                    Type = t.Type.Name
+                })
+                .AsNoTracking()
+                .ToListAsync();
+
+            return transactions;
+        }
+
     }
 }
